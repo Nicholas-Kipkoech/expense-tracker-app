@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ToastAndroid,
 } from "react-native";
 
 import { auth } from "../components/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useNavigation } from "expo-router";
 
@@ -19,20 +20,20 @@ const LoginScreen = () => {
     password: "",
   });
 
-  const nav = useNavigation();
+  const nav = useNavigation<any>();
 
   async function handleLogin() {
     const { email, password } = loginRequest;
     if (email && password) {
       try {
-        const response = await createUserWithEmailAndPassword(
+        const response = await signInWithEmailAndPassword(
           auth,
           email,
           password
         );
-        console.log(response);
+        const user = response.user;
+        nav.navigate("(tabs)");
       } catch (error) {
-        console.log(error);
         Alert.alert("Oops", "Please check your form and submit again");
       }
     }
