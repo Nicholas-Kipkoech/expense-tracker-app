@@ -5,9 +5,39 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 
-export default function HeroScreen() {
+import { auth } from "../components/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import { useNavigation } from "expo-router";
+
+const LoginScreen = () => {
+  const [loginRequest, setLoginRequest] = useState({
+    email: "",
+    password: "",
+  });
+
+  const nav = useNavigation();
+
+  async function handleLogin() {
+    const { email, password } = loginRequest;
+    if (email && password) {
+      try {
+        const response = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        Alert.alert("Oops", "Please check your form and submit again");
+      }
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Image
@@ -19,21 +49,32 @@ export default function HeroScreen() {
           Expense tracker
         </Text>
       </View>
-      <TextInput placeholder="Enter email" style={styles.input} />
+      <TextInput
+        placeholder="Enter email"
+        style={styles.input}
+        value={loginRequest.email}
+        onChangeText={(text) =>
+          setLoginRequest({ ...loginRequest, email: text })
+        }
+      />
       <TextInput
         placeholder="Enter password"
         style={styles.input}
         secureTextEntry
+        value={loginRequest.password}
+        onChangeText={(text) =>
+          setLoginRequest({ ...loginRequest, password: text })
+        }
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={{ color: "black", fontWeight: "700", fontSize: 16 }}>
           Login
         </Text>
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -70,3 +111,5 @@ const styles = StyleSheet.create({
     width: 60,
   },
 });
+
+export default LoginScreen;
