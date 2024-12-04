@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.expensetracker'
+    namespace 'com.nicholas.kipkoech'
     defaultConfig {
-        applicationId 'com.anonymous.expensetracker'
+        applicationId 'com.nicholas.kipkoech'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

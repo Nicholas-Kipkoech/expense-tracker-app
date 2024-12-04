@@ -1,4 +1,4 @@
-package com.anonymous.expensetracker
+package com.nicholas.kipkoech
 
 import android.app.Application
 import android.content.res.Configuration

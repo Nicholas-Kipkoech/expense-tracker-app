@@ -1,4 +1,4 @@
-package com.anonymous.expensetracker
+package com.nicholas.kipkoech
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

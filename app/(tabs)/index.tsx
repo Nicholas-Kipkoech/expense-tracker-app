@@ -1,7 +1,7 @@
-import { auth, db } from "@/components/firebase";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import auth from "@react-native-firebase/auth";
+import database from "@react-native-firebase/database";
+import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -20,21 +20,25 @@ export default function HomeScreen() {
     expenseAmount: "",
   });
 
+  const { navigate } = useNavigation<any>();
+
   const handleAddExpense = async () => {
     if (expenseRequest.expenseName && expenseRequest.expenseAmount) {
       try {
-        const user = getAuth().currentUser;
+        const user = auth().currentUser;
         if (user) {
-          const docRef = await addDoc(collection(db, "expenses"), {
+          const expenseRef = database().ref("expenses");
+          const newExpenseRef = expenseRef.push();
+          await newExpenseRef.set({
             expenseName: expenseRequest.expenseName,
-            expenseAmount: expenseRequest.expenseAmount,
+            expenseAmount: parseFloat(expenseRequest.expenseAmount),
             userId: user.uid,
-            timestamp: new Date(),
+            timestamp: database.ServerValue.TIMESTAMP,
           });
-          console.log("document writed with ID", docRef.id);
+          Alert.alert("Success", "expense added successfully");
+          navigate("expenses");
+          console.log("document written", newExpenseRef.key);
         }
-
-        Alert.alert("Success", "expense added successfully");
       } catch (error) {
         console.error("error adding document", error);
       }

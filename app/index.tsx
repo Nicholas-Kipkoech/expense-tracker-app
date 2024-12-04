@@ -8,9 +8,10 @@ import {
   Alert,
   ToastAndroid,
 } from "react-native";
+// Initialize Firebase
 
-import { auth } from "../components/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import auth from "@react-native-firebase/auth";
+
 import { useState } from "react";
 import { useNavigation } from "expo-router";
 
@@ -26,8 +27,7 @@ const LoginScreen = () => {
     const { email, password } = loginRequest;
     if (email && password) {
       try {
-        const response = await signInWithEmailAndPassword(
-          auth,
+        const response = await auth().signInWithEmailAndPassword(
           email,
           password
         );

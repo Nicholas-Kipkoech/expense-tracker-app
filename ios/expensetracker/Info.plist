@@ -28,7 +28,13 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>myapp</string>
-          <string>com.anonymous.expensetracker</string>
+          <string>com.nicholas.kipkoech</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.450263607568-jod4im6tecbng56qah10b8ce1rno3kdb</string>
         </array>
       </dict>
     </array>
